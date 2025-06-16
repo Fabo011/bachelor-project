@@ -1,0 +1,23 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "mcp",
+    "collectionId": "ed93f3e1-f5d0-4239-aa76-947ad79317a0",
+    "dateExported": "2025-06-16T09:36:48.909Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "6c38197b-518a-4843-bb0f-bb8b610d12c3",
+            "colId": "ed93f3e1-f5d0-4239-aa76-947ad79317a0",
+            "containerId": "",
+            "name": "test",
+            "url": "http://localhost:8000/test",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2025-06-16T08:59:46.531Z",
+            "modified": "2025-06-16T09:00:14.978Z",
+            "headers": []
+        }
+    ],
+    "ref": "gJ6htSesS4wLKVzrE9xuPuVP8UvzY6Kk1ehEzQoSu_4_P2gBB-3OIrMptiveXGjfMUGi94H35x_bKmnmF4zwkA"
+}
