@@ -2,7 +2,7 @@
     "clientName": "Thunder Client",
     "collectionName": "mcp",
     "collectionId": "ed93f3e1-f5d0-4239-aa76-947ad79317a0",
-    "dateExported": "2025-06-16T09:36:48.909Z",
+    "dateExported": "2025-06-16T10:15:37.491Z",
     "version": "1.2",
     "folders": [],
     "requests": [
@@ -10,14 +10,19 @@
             "_id": "6c38197b-518a-4843-bb0f-bb8b610d12c3",
             "colId": "ed93f3e1-f5d0-4239-aa76-947ad79317a0",
             "containerId": "",
-            "name": "test",
-            "url": "http://localhost:8000/test",
+            "name": "askmodel",
+            "url": "http://localhost:8000/askmodel",
             "method": "POST",
             "sortNum": 10000,
             "created": "2025-06-16T08:59:46.531Z",
-            "modified": "2025-06-16T09:00:14.978Z",
-            "headers": []
+            "modified": "2025-06-16T10:12:51.168Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"prompt\": \"What is the best place in Malaga?\"\n}",
+                "form": []
+            }
         }
     ],
-    "ref": "gJ6htSesS4wLKVzrE9xuPuVP8UvzY6Kk1ehEzQoSu_4_P2gBB-3OIrMptiveXGjfMUGi94H35x_bKmnmF4zwkA"
+    "ref": "gJ6htSesS4wLKVzrE9xuPmMkSHOMxXCnfdO6Xc4OZXLB-kYmOoGqhqggUT_eUlQ_b5Xk6GhPJkv4pZ7u2BleCw"
 }
