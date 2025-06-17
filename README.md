@@ -42,7 +42,7 @@ Based on the response from the LLM, the MCP server sends an email notifying that
 ---
 
 ### Links
-Gpt4All: https://gpt4all.io/
-mcp-use: https://pypi.org/project/mcp-use/#quick-start
-fastmcp for Zapier: https://pypi.org/project/fastmcp/
-Docker MCP-Toolkit: https://hub.docker.com/search?q=mcp+toolkit
+- Gpt4All: https://gpt4all.io/
+- mcp-use: https://pypi.org/project/mcp-use/#quick-start
+- fastmcp for Zapier: https://pypi.org/project/fastmcp/
+- Docker MCP-Toolkit: https://hub.docker.com/search?q=mcp+toolkit
