@@ -1,16 +1,14 @@
 import os
-from gpt4all import GPT4All
+from langchain_community.llms import GPT4All
+from lib.model.langchain_llm_wrapper import SimpleLangChainLLMWrapper
 
-def load_model():
-    MODEL_NAME = "Meta-Llama-3-8B-Instruct.Q4_0.gguf"
-    MODEL_DIR = os.path.expanduser("~/.cache/gpt4all")
-    MODEL_PATH = os.path.join(MODEL_DIR, MODEL_NAME)
+model_path = os.path.expanduser("~/.cache/gpt4all")
+model_file = os.path.join(model_path, "Meta-Llama-3-8B-Instruct.Q4_0.gguf")
 
-    os.makedirs(MODEL_DIR, exist_ok=True)
+llm = GPT4All(
+    model=model_file,
+    verbose=True,
+)
 
-    if not os.path.exists(MODEL_PATH):
-        print(f"Model not found at {MODEL_PATH}, downloading...")
-    else:
-        print(f"Model found at {MODEL_PATH}, using local copy.")
+llm_wrapper = SimpleLangChainLLMWrapper(llm=llm)
 
-    return GPT4All(MODEL_NAME, model_path=MODEL_DIR)
