@@ -1,3 +1,5 @@
+# AI Workflow
+
 ## Installation
 
 Disclaimer: This is made and tested on Apple M1.
@@ -8,12 +10,12 @@ source venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-Install Gpt4All on your machine: https://gpt4all.io/
-
 **Start Server**
 ```
 uvicorn server:app --reload
 ```
+
+---
 
 ### LLM
 local_llm = GPT4All("Meta-Llama-3-8B-Instruct.Q4_0.gguf")
@@ -27,11 +29,20 @@ This .gguf file is the compressed weights of the actual LLM (Meta’s LLaMA 3–
 
 ---
 
+### Prompt for the model
+**Info:** The prompt can be sent via an API call using Thunder Client. Use the Thunder Client collection and the Thunder Client VSCode extension.
+
+Given the following plant data: Soil moisture: 15%, Last watered: 4 days ago, Temperature: 30°C. Decide whether the plant needs water or not. If the plant needs water, include the phrase 'plant needs water' in your answer. Otherwise, explain why it does not need water.
+
+---
+
 ### MCP
-```
-result = await zapier.call("gmail_send_email", {
-    "to": "based011@protonmail.com",
-    "subject": "Best places in Malaga",
-    "body": email_body
-})
-```
+Based on the response from the LLM, the MCP server sends an email notifying that the plant needs watering. If the LLM indicates that watering is not needed, the MCP server will not send any email.
+
+---
+
+### Links
+Gpt4All: https://gpt4all.io/
+mcp-use: https://pypi.org/project/mcp-use/#quick-start
+fastmcp for Zapier: https://pypi.org/project/fastmcp/
+Docker MCP-Toolkit: https://hub.docker.com/search?q=mcp+toolkit

@@ -2,7 +2,7 @@
     "clientName": "Thunder Client",
     "collectionName": "mcp",
     "collectionId": "ed93f3e1-f5d0-4239-aa76-947ad79317a0",
-    "dateExported": "2025-06-16T10:15:37.491Z",
+    "dateExported": "2025-06-17T10:30:40.511Z",
     "version": "1.2",
     "folders": [],
     "requests": [
@@ -15,14 +15,14 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2025-06-16T08:59:46.531Z",
-            "modified": "2025-06-16T10:12:51.168Z",
+            "modified": "2025-06-17T09:02:51.552Z",
             "headers": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"prompt\": \"What is the best place in Malaga?\"\n}",
+                "raw": "{\n  \"prompt\": \"Given the following plant data: Soil moisture: 15%, Last watered: 4 days ago, Temperature: 30°C. Decide whether the plant needs water or not. If the plant needs water, include the phrase 'plant needs water' in your answer. Otherwise, explain why it does not need water.\"\n}",
                 "form": []
             }
         }
     ],
-    "ref": "gJ6htSesS4wLKVzrE9xuPmMkSHOMxXCnfdO6Xc4OZXLB-kYmOoGqhqggUT_eUlQ_b5Xk6GhPJkv4pZ7u2BleCw"
+    "ref": "gJ6htSesS4wLKVzrE9xuPrI6puU5ZQ628yGAK4oj0x27FZ3s6eLL6zNLHCfy9S79qzB2ka3p6NI0rw585sF1dw"
 }
