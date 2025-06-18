@@ -1,9 +1,8 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from mcp_use import MCPClient, MCPAgent
-import asyncio
 
-from lib.model.model import llm_wrapper  # your wrapper with .bind_tools
+from lib.model.model import llm_wrapper
 
 app = FastAPI()
 
@@ -38,12 +37,7 @@ async def askmodel(request: PromptRequest):
 
     return {"llm_response": response_text}
 
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
-
-
-
-
-
-    

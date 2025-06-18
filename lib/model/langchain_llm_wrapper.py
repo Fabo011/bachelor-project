@@ -63,14 +63,7 @@ class SimpleLangChainLLMWrapper(BaseChatModel):
        run_manager: Optional[CallbackManagerForLLMRun] = None,
        **kwargs
     ) -> LLMResult:
-      # just call the sync _generate method wrapped in an async context
-      # If your underlying llm supports async, use that instead
       return self._generate(messages, stop=stop, run_manager=run_manager, **kwargs)
 
     def bind_tools(self, tools):
         return self
-
-
-
-
-
