@@ -54,6 +54,11 @@ Configurations for the LLM. I`ve changed the parameters to run it on Mac M1 with
 - langchain docs: https://python.langchain.com/api_reference/community/llms/langchain_community.llms.gpt4all.GPT4All.html
 - LLM: https://ollama.com/MFDoom/deepseek-r1-tool-calling?utm_source=chatgpt.com
 - Start LLMs locally: https://ollama.com/
+- mcp-use docs: https://docs.mcp-use.io/essentials/agent-configuration
+- bind_tools: https://github.com/langchain-ai/langchain/discussions/21907
+- Claude bind_tools: https://github.com/anthropics/anthropic-tools/blob/main/tool_use_package/EXAMPLES.md?utm_source=chatgpt.com
+- Claude tool use: https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview
+- more bind_tools infos: https://github.com/langchain-ai/langchain/discussions/25811?utm_source=chatgpt.com
 
 ---
 
