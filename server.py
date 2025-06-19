@@ -34,21 +34,21 @@ async def askmodel(request: PromptRequest):
 
     tool_calls = response.get("message", {}).get("tool_calls", [])
     if tool_calls:
-        tool_call = tool_calls[0]
-        tool_name = tool_call["function"]["name"]
-        args = tool_call["function"]["arguments"]
-
-        # call MCP tool async
-        result = await app.state.mcp_client.call_tool(tool_name, args)
-
-        try:
-            parsed_result = json.loads(result[0].text)
-        except Exception:
-            parsed_result = result[0].text
-
-        return {"llm_response": f"Tool '{tool_name}' called successfully with result: {parsed_result}"}
-
-    return {"llm_response": response["message"]["content"]}
+      results = []
+      for tool_call in tool_calls:
+          tool_name = tool_call["function"]["name"]
+          args = tool_call["function"]["arguments"]
+  
+          result = await app.state.mcp_client.call_tool(tool_name, args)
+  
+          try:
+              parsed_result = json.loads(result[0].text)
+          except Exception:
+              parsed_result = result[0].text
+  
+          results.append({"tool": tool_name, "result": parsed_result})
+  
+    return {"llm_response": results}
 
 if __name__ == "__main__":
     import uvicorn
