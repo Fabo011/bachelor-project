@@ -3,7 +3,7 @@ from pydantic import BaseModel
 import ollama
 import json
 from fastmcp import Client
-from lib.tools.tools import create_issue_tool
+from lib.tools.tools import create_issue_tool, gmail_send_email_tool
 
 app = FastAPI()
 
@@ -17,6 +17,11 @@ async def startup_event():
 
     app.state.mcp_client = Client(config)
     await app.state.mcp_client.__aenter__()
+    
+    tools = await app.state.mcp_client.list_tools()
+    print("🔧 Available tools from MCP server:")
+    for tool in tools:
+        print(f"- {tool.name}")
 
 @app.on_event("shutdown")
 async def shutdown_event():
@@ -29,7 +34,7 @@ async def askmodel(request: PromptRequest):
     response = ollama.chat(
         model="llama3.1",
         messages=messages,
-        tools=[create_issue_tool]
+        tools=[create_issue_tool, gmail_send_email_tool]
     )
 
     tool_calls = response.get("message", {}).get("tool_calls", [])

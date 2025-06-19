@@ -1,7 +1,7 @@
 create_issue_tool = {
     "type": "function",
     "function": {
-        "name": "create_issue",
+        "name": "MCP_DOCKER_create_issue",
         "description": "Create a GitHub issue using the connected MCP server",
         "parameters": {
             "type": "object",
@@ -28,4 +28,20 @@ create_issue_tool = {
     }
 }
 
-# e.g. another_tool = { ... }
+gmail_send_email_tool = {
+    "type": "function",
+    "function": {
+        "name": "Zapier_gmail_send_email",
+        "description": "Send an email using the Zapier MCP gmail_send_email tool",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "to": {"type": "string", "description": "Recipient email address"},
+                "subject": {"type": "string", "description": "Subject of the email"},
+                "body": {"type": "string", "description": "Body content of the email"},
+                "instructions": {"type": "string", "description": "Optional instructions for sending the email"},
+            },
+            "required": ["to", "subject", "body"]
+        }
+    }
+}
