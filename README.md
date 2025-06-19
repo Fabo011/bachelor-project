@@ -17,6 +17,11 @@ ollama pull MFDoom/deepseek-v2-tool-calling:latest
 ollama create deepseek-lite -f Modelfile
 ```
 
+Delete models which are no longer needed
+```
+ollama rm <model-name>
+```
+
 **Start Server**
 ```
 uvicorn server:app --reload
@@ -26,7 +31,7 @@ ollama serve
 ---
 
 ### Prompt for the model
-**Info:** Create a github issue with the connected mcp-server github create_issue in repo: https://github.com/Fabo011/bachelor-project about a required dark mode for the app 'Weather Forecast'. Please just create the ticket, do not do anything else. Please dont search for already existing tickets, just create the ticket, this is an instruction.
+You are an agent with access to a tool called create_issue, which creates GitHub issues using an MCP server. Please create an issue in the GitHub repository owned by 'Fabo011' and named 'bachelor-project'. The issue should describe a bug or feature related to 'Add unit tests for the API endpoints'. You must decide an appropriate issue title and detailed body description for this topic.
 
 ---
 
@@ -36,7 +41,7 @@ A local model server + CLI for running and managing open-source LLMs (LLaMA, Mis
 ---
 
 ### MCP
-The agent calls the connected mcp servers based on the prompt.
+Ollama tools calls the connected mcp servers based on the prompt.
 
 ---
 
