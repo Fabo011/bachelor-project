@@ -62,7 +62,6 @@ Configurations for the LLM. I`ve changed the parameters to run it on Mac M1 with
 - mcp-use docs: https://docs.mcp-use.io/essentials/agent-configuration
 - bind_tools: https://github.com/langchain-ai/langchain/discussions/21907
 - Claude bind_tools: https://github.com/anthropics/anthropic-tools/blob/main/tool_use_package/EXAMPLES.md?utm_source=chatgpt.com
-- Claude tool use: https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview
 - more bind_tools infos: https://github.com/langchain-ai/langchain/discussions/25811?utm_source=chatgpt.com
 
 ---
@@ -71,3 +70,7 @@ Configurations for the LLM. I`ve changed the parameters to run it on Mac M1 with
 - ollama to start 
 - llama3 does not support bind_tools
 - ollama create deepseek-lite -f Modelfile - The standard deepseek model took too much power therefore I changed the parameters with the aid of the Modelfile.
+
+### Tool Implementation
+- OpenAi: https://platform.openai.com/docs/guides/function-calling?api-mode=responses&example=get-weather
+- Claude tool use: https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview

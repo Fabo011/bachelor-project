@@ -3,49 +3,18 @@ from pydantic import BaseModel
 import ollama
 import json
 from fastmcp import Client
+from lib.tools.tools import create_issue_tool
 
 app = FastAPI()
 
 class PromptRequest(BaseModel):
     prompt: str
 
-create_issue_tool = {
-    "type": "function",
-    "function": {
-        "name": "create_issue",
-        "description": "Create a GitHub issue using the connected MCP server",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "owner": {
-                    "type": "string",
-                    "description": "Owner or organization of the GitHub repository"
-                },
-                "repo": {
-                    "type": "string",
-                    "description": "Name of the GitHub repository"
-                },
-                "title": {
-                    "type": "string",
-                    "description": "Title of the issue"
-                },
-                "body": {
-                    "type": "string",
-                    "description": "Body/description of the issue"
-                },
-            },
-            "required": ["owner", "repo", "title", "body"]
-        }
-    }
-}
-
-
 @app.on_event("startup")
 async def startup_event():
     with open("mcp.json", "r") as f:
         config = json.load(f)
 
-    # config is a dict with "mcpServers" inside
     app.state.mcp_client = Client(config)
     await app.state.mcp_client.__aenter__()
 
