@@ -2,7 +2,7 @@
 
 ## Installation
 
-Disclaimer: This is made and tested on Apple M1.
+Disclaimer: This is made and tested on Apple M1 with 16gb RAM.
 
 ```
 python3 -m venv venv
@@ -24,8 +24,8 @@ ollama rm <model-name>
 
 **Start Server**
 ```
-uvicorn server:app --reload
 ollama serve
+uvicorn server:app --reload
 ```
 ---
 
@@ -40,7 +40,7 @@ Ollama tools calls the connected mcp servers based on the prompt.
 ---
 
 ### Modelfile
-Configurations for the LLM. I`ve changed the parameters to run it on Mac M1 with 16gb RAM without interruptions.
+Configurations for the LLM. llama3 was running without adjustments. I`ve changed the parameters for deepseek to run it on Mac M1 with 16gb RAM without interruptions.
 
 ---
 
@@ -53,23 +53,19 @@ Configurations for the LLM. I`ve changed the parameters to run it on Mac M1 with
 
 ---
 
-### Infos
-- ollama to start 
-- llama3 does not support bind_tools
-- ollama create deepseek-lite -f Modelfile - The standard deepseek model took too much power therefore I changed the parameters with the aid of the Modelfile.
-
----
-
-### Tool Implementation
+### Tool Implementation Links
 - Ollama: https://ollama.com/blog/tool-support
 - OpenAi: https://platform.openai.com/docs/guides/function-calling?api-mode=responses&example=get-weather
 - Claude tool use: https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview
 
 ---
 
-### Response from LLM
-Prompt: Prompt: What’s the best place to visit in Málaga? Please include a short answer in your reply. Then, create a GitHub issue titled 'Book a flight to Málaga' in the Fabo011/bachelor-project repository with the right tool. Also, send an email to myemail@proton.me with the right tool containing your answer about the best place to visit.
+### Prompt
+**Hint:** Use thunderclient extention in VsCode.
 
+What’s the best place to visit in Málaga? Please include a short answer in your reply. Then, create a GitHub issue titled 'Book a flight to Málaga' in the 'repo-name' repository with the right tool. Also, send an email to myemail@proton.me with the right tool containing your answer about the best place to visit.
+
+### Response from LLM
 ```
 {
   "llm_response": [
@@ -78,8 +74,8 @@ Prompt: Prompt: What’s the best place to visit in Málaga? Please include a sh
       "result": {
         "results": [
           {
-            "id": "197878a3b34d0237",
-            "threadId": "197878a3b34d0237",
+            "id": "197878948989893434d0237",
+            "threadId": "197878948989893434d0237",
             "labelIds": [
               "SENT"
             ]
@@ -177,7 +173,7 @@ Prompt: Prompt: What’s the best place to visit in Málaga? Please include a sh
           "eyes": 0,
           "url": "https://api.github.com/repos/Fabo011/bachelor-project/issues/35/reactions"
         },
-        "node_id": "I_kwDOO3nuSM68VIMB"
+        "node_id": "I_kwDOO3nuSM68VZZUIMB"
       }
     }
   ]

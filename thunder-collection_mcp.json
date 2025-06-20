@@ -19,7 +19,7 @@
             "headers": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"prompt\": \"Create a github issue with the connected mcp-server github create_issue in repo: https://github.com/Fabo011/bachelor-project about a required dark mode for the app 'Weather Forecast'. Please just create the ticket, do not do anything else. Please dont search for already existing tickets, just create the ticket, this is an instruction.\"\n}",
+                "raw": "{\n  \"prompt\": \"What’s the best place to visit in Málaga? Please include a short answer in your reply. Then, create a GitHub issue titled 'Book a flight to Málaga' in the <repo-name> repository with the right tool. Also, send an email to myemail@proton.me with the right tool containing your answer about the best place to visit.\"\n}",
                 "form": []
             }
         }
