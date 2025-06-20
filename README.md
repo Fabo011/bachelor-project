@@ -66,3 +66,7 @@ Configurations for the LLM. I`ve changed the parameters to run it on Mac M1 with
 - ollama to start 
 - llama3 does not support bind_tools
 - ollama create deepseek-lite -f Modelfile - The standard deepseek model took too much power therefore I changed the parameters with the aid of the Modelfile.
+
+
+### Build LLM powered Agents
+- https://docs.llamaindex.ai/en/stable/
