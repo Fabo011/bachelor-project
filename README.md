@@ -179,3 +179,25 @@ What’s the best place to visit in Málaga? Please include a short answer in yo
   ]
 }
 ```
+
+---
+
+### Running Prompts without using Pre-Prompts 
+**Running prompt for mails: CallTool:** Send an email to myemail@proton.me with subject "Meeting Follow-up" and body "Hi Alice, thanks for the great meeting today. Let's catch up next week." with the gmail_send_email tool Instructions: send it ASAP.
+
+
+**Running prompt for duckduckgo search:** callTool Use MCP_DOCKER_search to look up "the best austrian meals for dinner". Return 5 results with safeSearch=off.
+
+**Running prompt for duckduckgo fetch_content:** callTool Use MCP_DOCKER_fetch_content to fetch the text contents of this homepage: https://yourdomain.com
+
+**Running prompt for wikipedia get_summary:** calltool Please give me a summary about a wikipedia article of nikolas tesla with the wikipedia tool MCP_DOCKER_get_summary
+
+**Info:** If you want to talk with the llm without tool, just ask questions without "calltool".
+
+
+### Running Prompts with Pre-Prompts
+**Exact definitions of the tool names no longer required, the llm learned the tools by the pre prompt.**
+
+**Running prompt for duckduckgo fetch_content:** callTool Use duckduchgo fetch tool to fetch the text contents of this homepage: https://yourdomain.com
+
+**Running prompt for wikipedia get_summary:** calltool Please give me a summary about a wikipedia article of michael schumacher with the wikipedia tool get summary

@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import ollama
 from fastmcp import Client
-from lib.tools.tools import create_issue_tool
+from lib.tools.tools import create_issue_tool, gmail_send_email_tool, duckduckgo_search_tool, duckduckgo_fetch_content_tool, wikipedia_get_summary_tool
 import uvicorn
 
 # -------------------------
@@ -45,7 +45,7 @@ async def askmodel(request: PromptRequest):
         response = ollama.chat(
             model="llama3.1",
             messages=messages,
-            tools=[create_issue_tool]
+            tools=[create_issue_tool, gmail_send_email_tool, duckduckgo_search_tool, duckduckgo_fetch_content_tool, wikipedia_get_summary_tool]
         )
     else:
         response = ollama.chat(
