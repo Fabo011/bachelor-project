@@ -25,7 +25,7 @@ ollama rm <model-name>
 **Start Server**
 ```
 ollama serve
-uvicorn server:app --reload
+streamlit run app.py
 ```
 ---
 
