@@ -201,3 +201,16 @@ What’s the best place to visit in Málaga? Please include a short answer in yo
 **Running prompt for duckduckgo fetch_content:** callTool Use duckduchgo fetch tool to fetch the text contents of this homepage: https://yourdomain.com
 
 **Running prompt for wikipedia get_summary:** calltool Please give me a summary about a wikipedia article of michael schumacher with the wikipedia tool get summary
+
+---
+
+### How to Dockerize whole Infrastructure
+1. Start ollama in docker: https://hub.docker.com/r/ollama/ollama
+2. Start MCP-Servers in docker: 
+   - Github: https://hub.docker.com/r/mcp/github-mcp-server
+   - duckduckgo: https://hub.docker.com/r/mcp/duckduckgo
+   - elasticsearch: https://hub.docker.com/r/mcp/elasticsearch
+3. Build streamlit app docker container
+4. Run the containers:
+   - locally: e.g. Synology NAS or on computers (mac, linux)
+   - cloud: e.g. Azure Container Apps: Azure Container Apps is a serverless platform that allows you to run containerized applications without managing infrastructure. It supports features like automatic scaling, event-driven processing, and easy deployment of microservices. For ollama I propose to use serverless GPU: https://learn.microsoft.com/en-us/azure/container-apps/gpu-serverless-overview
