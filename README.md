@@ -212,5 +212,5 @@ What’s the best place to visit in Málaga? Please include a short answer in yo
    - elasticsearch: https://hub.docker.com/r/mcp/elasticsearch
 3. Build streamlit app docker container
 4. Run the containers:
-   - locally: e.g. Synology NAS or on computers (mac, linux)
+   - locally: e.g. Synology NAS or on computers (mac, linux). Consider Watchtower to automatically update docker container: https://containrrr.dev/watchtower/
    - cloud: e.g. Azure Container Apps: Azure Container Apps is a serverless platform that allows you to run containerized applications without managing infrastructure. It supports features like automatic scaling, event-driven processing, and easy deployment of microservices. For ollama I propose to use serverless GPU: https://learn.microsoft.com/en-us/azure/container-apps/gpu-serverless-overview
