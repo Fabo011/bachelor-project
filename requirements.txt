@@ -4,3 +4,4 @@ fastmcp==2.8.1
 streamlit==1.46.0
 ollama==0.5.1
 fastmcp==2.8.1
+httpx==0.23.2

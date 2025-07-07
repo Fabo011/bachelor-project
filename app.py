@@ -7,8 +7,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import ollama
 from fastmcp import Client
-from lib.tools.tools import create_issue_tool, gmail_send_email_tool, duckduckgo_search_tool, duckduckgo_fetch_content_tool, wikipedia_get_summary_tool
 import uvicorn
+from lib.toolhub.index import fetch_tools_from_toolhub
 
 # -------------------------
 # FASTAPI BACKEND
@@ -41,18 +41,23 @@ async def askmodel(request: PromptRequest):
     messages = [{"role": "user", "content": request.prompt}]
     use_tools = "calltool" in request.prompt.lower()
 
+    tools = []
     if use_tools:
+        tools, prompts = await fetch_tools_from_toolhub()
+        print("🔧 Available tools from ToolHub API:", tools)
+
+    if use_tools and tools:
         response = ollama.chat(
             model="llama3.1",
             messages=messages,
-            tools=[create_issue_tool, gmail_send_email_tool, duckduckgo_search_tool, duckduckgo_fetch_content_tool, wikipedia_get_summary_tool]
+            tools=tools
         )
     else:
         response = ollama.chat(
             model="llama3.1",
             messages=messages
         )
-
+    
     llm_message = response.get("message", {}).get("content", "").strip()
     tool_calls = response.get("message", {}).get("tool_calls", [])
     tool_results = []
@@ -61,11 +66,8 @@ async def askmodel(request: PromptRequest):
         for tool_call in tool_calls:
             tool_name = tool_call["function"]["name"]
             args = tool_call["function"]["arguments"]
-
             result = await app.state.mcp_client.call_tool(tool_name, args)
             raw_text = result[0].text if result else "⚠️ Tool returned no result"
-            print(f"🔧 Tool `{tool_name}` Raw Result:", raw_text)
-
             tool_results.append({"tool": tool_name, "raw": raw_text})
 
     return {

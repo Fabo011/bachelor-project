@@ -214,3 +214,7 @@ What’s the best place to visit in Málaga? Please include a short answer in yo
 4. Run the containers:
    - locally: e.g. Synology NAS or on computers (mac, linux). Consider Watchtower to automatically update docker container: https://containrrr.dev/watchtower/
    - cloud: e.g. Azure Container Apps: Azure Container Apps is a serverless platform that allows you to run containerized applications without managing infrastructure. It supports features like automatic scaling, event-driven processing, and easy deployment of microservices. For ollama I propose to use serverless GPU: https://learn.microsoft.com/en-us/azure/container-apps/gpu-serverless-overview
+
+### MCP Toolhub API
+To avoid redefining each tool from scratch in every project, I created the mcp-toolhub-api https://github.com/Fabo011/mcp-toolhub-api. 
+This API can be expanded and enhanced by the community in the future. See readme in https://github.com/Fabo011/mcp-toolhub-api.
