@@ -2,8 +2,6 @@
 
 ## Installation
 
-Disclaimer: This is made and tested on Apple M1 with 16gb RAM.
-
 ```
 python3 -m venv venv
 source venv/bin/activate
@@ -13,6 +11,10 @@ pip3 install -r requirements.txt
 ```
 brew install ollama
 ollama pull llama3
+```
+
+If you want to use deepseek LLM
+```
 ollama pull MFDoom/deepseek-v2-tool-calling:latest
 ollama create deepseek-lite -f Modelfile
 ```
@@ -30,7 +32,7 @@ streamlit run app.py
 ---
 
 ### Ollama
-A local model server + CLI for running and managing open-source LLMs (LLaMA, Mistral, etc.).
+A local model server + CLI for running and managing open-source LLMs (LLaMA, DeepSeek, Mistral, etc.).
 
 ---
 
@@ -40,7 +42,7 @@ Ollama tools calls the connected mcp servers based on the prompt.
 ---
 
 ### Modelfile
-Configurations for the LLM. llama3 was running without adjustments. I`ve changed the parameters for deepseek to run it on Mac M1 with 16gb RAM without interruptions.
+Configurations for the LLM. Llama3 was running without adjustments. I`ve changed the parameters for deepseek to run it on Synology NAS (CPU) without interruptions.
 
 ---
 
@@ -55,130 +57,8 @@ Configurations for the LLM. llama3 was running without adjustments. I`ve changed
 
 ### Tool Implementation Links
 - Ollama: https://ollama.com/blog/tool-support
-- OpenAi: https://platform.openai.com/docs/guides/function-calling?api-mode=responses&example=get-weather
+- OpenAi Function Calling: https://platform.openai.com/docs/guides/function-calling?api-mode=responses&example=get-weather
 - Claude tool use: https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview
-
----
-
-### Prompt
-**Hint:** Use thunderclient extention in VsCode.
-
-What’s the best place to visit in Málaga? Please include a short answer in your reply. Then, create a GitHub issue titled 'Book a flight to Málaga' in the 'repo-name' repository with the right tool. Also, send an email to myemail@proton.me with the right tool containing your answer about the best place to visit.
-
-### Response from LLM
-```
-{
-  "llm_response": [
-    {
-      "tool": "Zapier_gmail_send_email",
-      "result": {
-        "results": [
-          {
-            "id": "197878948989893434d0237",
-            "threadId": "197878948989893434d0237",
-            "labelIds": [
-              "SENT"
-            ]
-          }
-        ],
-        "feedbackUrl": "https://mcp.zapier.com/mcp/servers/id/history/executions/id",
-        "execution": {
-          "id": "789jfhuig8989343b4j4i39",
-          "actionId": "8c503190-fe13-45d3-a89b-29494e1ed8e3",
-          "mcpServerId": "a2748489-8700-4b85-b542-538fa712f517",
-          "instructions": "",
-          "params": {
-            "to": "<myemail>@proton.me",
-            "body": "One of the best places to visit in Málaga is the historic center, which features stunning architecture and rich history.",
-            "subject": "Best Place to Visit in Málaga",
-            "instructions": ""
-          },
-          "resolvedParams": {
-            "to": {
-              "name": "To",
-              "label": null,
-              "value": "<myemail>@proton.me",
-              "reason": "top-level-hint",
-              "status": "locked"
-            },
-            "body": {
-              "name": "Body",
-              "label": null,
-              "value": "One of the best places to visit in Málaga is the historic center, which features stunning architecture and rich history.",
-              "reason": "top-level-hint",
-              "status": "locked"
-            },
-            "subject": {
-              "name": "Subject",
-              "label": null,
-              "value": "Best Place to Visit in Málaga",
-              "reason": "top-level-hint",
-              "status": "locked"
-            }
-          },
-          "status": "SUCCESS",
-          "createdDT": "2025-06-19T09:34:33.638Z"
-        },
-        "isPreview": false
-      }
-    },
-    {
-      "tool": "MCP_DOCKER_create_issue",
-      "result": {
-        "id": 3159655169,
-        "number": 35,
-        "state": "open",
-        "locked": false,
-        "title": "Book a flight to M?laga",
-        "body": "Please book a flight to M?laga for further instructions.",
-        "author_association": "OWNER",
-        "user": {
-          "login": "Fabo011",
-          "id": 93132701,
-          "node_id": "U_kgDOBY0XnQ",
-          "avatar_url": "https://avatars.githubusercontent.com/u/93132701?v=4",
-          "html_url": "https://github.com/Fabo011",
-          "gravatar_id": "",
-          "type": "User",
-          "site_admin": false,
-          "url": "https://api.github.com/users/Fabo011",
-          "events_url": "https://api.github.com/users/Fabo011/events{/privacy}",
-          "following_url": "https://api.github.com/users/Fabo011/following{/other_user}",
-          "followers_url": "https://api.github.com/users/Fabo011/followers",
-          "gists_url": "https://api.github.com/users/Fabo011/gists{/gist_id}",
-          "organizations_url": "https://api.github.com/users/Fabo011/orgs",
-          "received_events_url": "https://api.github.com/users/Fabo011/received_events",
-          "repos_url": "https://api.github.com/users/Fabo011/repos",
-          "starred_url": "https://api.github.com/users/Fabo011/starred{/owner}{/repo}",
-          "subscriptions_url": "https://api.github.com/users/Fabo011/subscriptions"
-        },
-        "comments": 0,
-        "created_at": "2025-06-19T09:34:34Z",
-        "updated_at": "2025-06-19T09:34:34Z",
-        "url": "https://api.github.com/repos/Fabo011/bachelor-project/issues/35",
-        "html_url": "https://github.com/Fabo011/bachelor-project/issues/35",
-        "comments_url": "https://api.github.com/repos/Fabo011/bachelor-project/issues/35/comments",
-        "events_url": "https://api.github.com/repos/Fabo011/bachelor-project/issues/35/events",
-        "labels_url": "https://api.github.com/repos/Fabo011/bachelor-project/issues/35/labels{/name}",
-        "repository_url": "https://api.github.com/repos/Fabo011/bachelor-project",
-        "reactions": {
-          "total_count": 0,
-          "+1": 0,
-          "-1": 0,
-          "laugh": 0,
-          "confused": 0,
-          "heart": 0,
-          "hooray": 0,
-          "rocket": 0,
-          "eyes": 0,
-          "url": "https://api.github.com/repos/Fabo011/bachelor-project/issues/35/reactions"
-        },
-        "node_id": "I_kwDOO3nuSM68VZZUIMB"
-      }
-    }
-  ]
-}
-```
 
 ---
 
@@ -215,6 +95,25 @@ What’s the best place to visit in Málaga? Please include a short answer in yo
    - locally: e.g. Synology NAS or on computers (mac, linux). Consider Watchtower to automatically update docker container: https://containrrr.dev/watchtower/
    - cloud: e.g. Azure Container Apps: Azure Container Apps is a serverless platform that allows you to run containerized applications without managing infrastructure. It supports features like automatic scaling, event-driven processing, and easy deployment of microservices. For ollama I propose to use serverless GPU: https://learn.microsoft.com/en-us/azure/container-apps/gpu-serverless-overview
 
+---
+
 ### MCP Toolhub API
 To avoid redefining each tool from scratch in every project, I created the mcp-toolhub-api https://github.com/Fabo011/mcp-toolhub-api. 
 This API can be expanded and enhanced by the community in the future. See readme in https://github.com/Fabo011/mcp-toolhub-api.
+
+---
+
+### Impressions from Testing
+
+Create Github Issue with Github MCP-Server
+<img width="1573" height="935" alt="create-github-issue" src="https://github.com/user-attachments/assets/792596d3-a468-4728-ab34-f456b6161d78" />
+
+Serach with DuckDuckGo MCP-Server
+<img width="1525" height="925" alt="duckduckgosearch" src="https://github.com/user-attachments/assets/9c912ce1-b09e-484d-9fbc-5ca131031730" />
+
+Send email with Zapier MCP-Server
+<img width="1556" height="935" alt="send-email" src="https://github.com/user-attachments/assets/d4980572-612c-4956-ba05-7c5ab99736b9" />
+
+Get summary from a Wikipedia-Page with Wikipedia MCP-Server
+<img width="1497" height="936" alt="wikipedia-get-summary" src="https://github.com/user-attachments/assets/e1c1464d-0ee6-4479-ae57-d33f61694aaf" />
+
