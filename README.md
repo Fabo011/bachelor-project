@@ -4,10 +4,10 @@
 
 Disclaimer: This is made and tested on Apple M1 with 16gb RAM.
 
+Install uv package manager if needed: https://docs.astral.sh/uv/getting-started/installation/
+
 ```
-python3 -m venv venv
-source venv/bin/activate
-pip3 install -r requirements.txt
+uv sync
 ```
 
 ```
@@ -22,10 +22,10 @@ Delete models which are no longer needed
 ollama rm <model-name>
 ```
 
-**Start Server**
+### Start Server
 ```
 ollama serve
-streamlit run app.py
+uv run streamlit run app.py
 ```
 ---
 

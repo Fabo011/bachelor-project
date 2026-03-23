@@ -1,6 +1,0 @@
-fastapi==0.115.6
-uvicorn==0.29.0
-fastmcp==2.8.1
-streamlit==1.46.0
-ollama==0.5.1
-fastmcp==2.8.1

@@ -129,6 +129,10 @@ def list_all_users() -> List[str]:
 # MCP CLIENT INITIALIZATION
 # -------------------------
 
+# -------------------------
+# MCP CLIENT INITIALIZATION
+# -------------------------
+
 @st.cache_resource
 def init_mcp_client():
     """Initialize MCP client once and cache it"""
@@ -314,87 +318,15 @@ def display_message_with_animation(placeholder, message: str, delay: float = 0.0
 # -------------------------
 
 st.set_page_config(page_title="AI Agent with MCP Tools", layout="centered")
+st.title("� AI Agent with MCP Tools")
 
-# -------------------------
-# USER AUTHENTICATION
-# -------------------------
-
-# Initialize session state for username
-if "username" not in st.session_state:
-    st.session_state.username = None
-
-# Show login if no username
-if st.session_state.username is None:
-    st.title("🤖 AI Agent - Login")
-    
-    st.markdown("""
-    Welcome to the AI Agent with persistent conversation history!
-    
-    Enter your name to start or continue your conversation.
-    """)
-    
-    # Show existing users
-    existing_users = list_all_users()
-    if existing_users:
-        st.info(f"📂 Existing users: {', '.join(existing_users)}")
-    
-    col1, col2 = st.columns([3, 1])
-    
-    with col1:
-        username_input = st.text_input(
-            "Enter your name:",
-            placeholder="e.g., John, Alice, etc.",
-            key="username_input"
-        )
-    
-    with col2:
-        st.write("")  # Spacing
-        st.write("")  # Spacing
-        login_button = st.button("Start Chat", type="primary")
-    
-    if login_button:
-        if username_input and username_input.strip():
-            st.session_state.username = username_input.strip()
-            # Load conversation history
-            st.session_state.messages = load_conversation_history(st.session_state.username)
-            st.rerun()
-        else:
-            st.error("Please enter a valid name!")
-    
-    st.stop()
-
-# -------------------------
-# MAIN CHAT INTERFACE
-# -------------------------
-
-st.title("🤖 AI Agent with MCP Tools")
-
-# Sidebar with user info and controls
+# Add agent explanation in sidebar
 with st.sidebar:
-    st.header(f"👤 User: {st.session_state.username}")
-    
-    # Logout button
-    if st.button("🚪 Logout", use_container_width=True):
-        save_conversation_history(st.session_state.username, st.session_state.messages)
-        st.session_state.username = None
-        st.session_state.messages = []
-        st.rerun()
-    
-    # Clear history button
-    if st.button("🗑️ Clear History", use_container_width=True):
-        if clear_conversation_history(st.session_state.username):
-            st.session_state.messages = [{"role": "assistant", "content": f"Hi {st.session_state.username}! I'm an AI agent. Ask me anything!"}]
-            st.success("History cleared!")
-            time.sleep(1)
-            st.rerun()
-    
-    st.divider()
-    
     st.header("ℹ️ How This Agent Works")
     st.markdown("""
     This is a **simple autonomous agent** that:
     
-    1. 🧠 **Reasons** about your question
+    1. �🧠 **Reasons** about your question
     2. 🎯 **Plans** what tools to use
     3. 🔧 **Uses tools** automatically (no keywords needed!)
     4. 🔄 **Iterates** - can use multiple tools in sequence
@@ -403,40 +335,133 @@ with st.sidebar:
     Just ask a question naturally and watch the agent work!
     
     **Max iterations:** 3  
-    **Available tools:** DuckDuckGo Search, Fetch Content
-    
-    💾 Your conversation is automatically saved!
+    **Available tools:** DuckDuckGo Search, DuckDuckGo Fetch Content
     """)
 
-# Initialize messages from loaded history
 if "messages" not in st.session_state:
-    st.session_state.messages = load_conversation_history(st.session_state.username)
+    st.session_state.messages = [{"role": "assistant", "content": "Hi! I'm an AI agent. Ask me anything, and I'll autonomously decide if I need to use tools to help answer your question!"}]
 
-# Display chat history
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# Chat input and agent execution
+def run_agent(user_prompt: str, max_iterations: int = 3):
+    """
+    Simple agent that can reason and use tools autonomously.
+    
+    Args:
+        user_prompt: The user's question
+        max_iterations: Maximum number of tool-use iterations
+    
+    Returns:
+        tuple: (final_response, agent_steps)
+    """
+    agent_steps = []
+    conversation_history = [{"role": "user", "content": user_prompt}]
+    
+    for iteration in range(max_iterations):
+        agent_steps.append(f"**🤖 Agent Iteration {iteration + 1}**")
+        
+        # Agent always has access to tools
+        response = ollama.chat(
+            model="llama3.1",
+            messages=conversation_history,
+            tools=[duckduckgo_search_tool, duckduckgo_fetch_content_tool]
+        )
+        
+        assistant_message = response.get("message", {})
+        llm_message = assistant_message.get("content", "").strip()
+        tool_calls = assistant_message.get("tool_calls", [])
+        
+        # Agent is thinking
+        if llm_message:
+            agent_steps.append(f"💭 *Agent thinking: {llm_message}*")
+        
+        # No tool calls? Agent has finished reasoning
+        if not tool_calls:
+            agent_steps.append("✅ *Agent finished - no more tools needed*")
+            return llm_message, agent_steps
+        
+        # Agent decided to use tools
+        agent_steps.append(f"🔧 *Agent using {len(tool_calls)} tool(s)*")
+        
+        # Execute all tool calls
+        tool_results_text = []
+        for tool_call in tool_calls:
+            tool_name = tool_call["function"]["name"]
+            args = tool_call["function"]["arguments"]
+            
+            agent_steps.append(f"  → Calling `{tool_name}` with args: `{args}`")
+            
+            try:
+                result = event_loop.run_until_complete(
+                    mcp_client.call_tool(tool_name, args)
+                )
+                
+                if hasattr(result, 'content') and result.content:
+                    raw_text = "\n".join([item.text for item in result.content if hasattr(item, 'text')])
+                else:
+                    raw_text = str(result)
+                
+                if not raw_text:
+                    raw_text = "⚠️ Tool returned no result"
+                
+                tool_results_text.append(f"Tool {tool_name} result:\n{raw_text}")
+                agent_steps.append(f"  ✓ Tool returned {len(raw_text)} characters")
+                
+            except Exception as tool_error:
+                error_msg = f"⚠️ Tool error: {str(tool_error)}"
+                tool_results_text.append(f"Tool {tool_name} error:\n{error_msg}")
+                agent_steps.append(f"  ✗ Tool error: {tool_error}")
+        
+        # Add assistant message and tool results to conversation history
+        conversation_history.append(assistant_message)
+        conversation_history.append({
+            "role": "tool",
+            "content": "\n\n".join(tool_results_text)
+        })
+        
+        agent_steps.append("")
+    
+    # Max iterations reached
+    agent_steps.append("⚠️ *Agent reached maximum iterations*")
+    
+    # Get final answer from agent
+    conversation_history.append({
+        "role": "user", 
+        "content": "Based on the tool results, please provide your final answer."
+    })
+    
+    final_response = ollama.chat(
+        model="llama3.1",
+        messages=conversation_history
+    )
+    
+    final_answer = final_response.get("message", {}).get("content", "").strip()
+    return final_answer, agent_steps
+
+
 if prompt := st.chat_input("Ask your question..."):
-    # Add user message
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    # Agent response
     with st.chat_message("assistant"):
         placeholder = st.empty()
         full_response = ""
 
         try:
             # Run the agent!
-            final_answer, agent_steps = run_agent(prompt, max_iterations=MAX_AGENT_ITERATIONS)
+            final_answer, agent_steps = run_agent(prompt, max_iterations=3)
             
-            # Format response
-            full_response = format_agent_response(agent_steps, final_answer)
+            # Show agent's reasoning process
+            full_response = "### 🤖 Agent Process\n\n"
+            full_response += "\n".join(agent_steps)
+            full_response += "\n\n---\n\n"
+            full_response += "### 📝 Final Answer\n\n"
+            full_response += final_answer
 
-            # Final fallback
+            # Final fallback - ensure there's always something to display
             if not full_response or full_response.strip() == "":
                 full_response = "_No response from agent._"
 
@@ -446,11 +471,12 @@ if prompt := st.chat_input("Ask your question..."):
             full_response = f"**⚠️ Error occurred:**\n```\n{str(e)}\n```\n\n**Details:**\n```\n{error_details}\n```"
             print(f"❌ Error: {error_details}")
 
-        # Display with animation
-        display_message_with_animation(placeholder, full_response)
+        # Typing animation
+        display = ""
+        for word in full_response.split():
+            display += word + " "
+            placeholder.markdown(display + "▌")
+            time.sleep(0.01)
+        placeholder.markdown(display)
 
-    # Save assistant message
     st.session_state.messages.append({"role": "assistant", "content": full_response})
-    
-    # Auto-save conversation history
-    save_conversation_history(st.session_state.username, st.session_state.messages)
